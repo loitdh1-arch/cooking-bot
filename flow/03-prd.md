@@ -67,7 +67,7 @@ Người mới tập nấu tại Việt Nam có nguyên liệu trong tủ lạnh
 
 - **Frontend**: Next.js 16 (App Router) + React 19 (sửa từ "Next.js 15" ngày 2026-11-22 theo ADR decision 5 — create-next-app chính thức cài bản 16.4.6), styling bằng Tailwind CSS v4.
 - **Backend**: Next.js API Routes (route handlers) — không có server riêng.
-- **AI**: Google Gemini API (model `gemini-2.5-flash` trên free tier — sửa từ `gemini-2.0-flash` ngày 2026-11-22 sau khi list-models bằng key thật cho thấy họ 2.0 đã retired), gọi từ API route server-side, API key nằm trong biến môi trường Vercel.
+- **AI**: Google Gemini API (model `gemini-3.6-flash` trên free tier — chốt sau test thật 2026-11-22: 2.0 retired, 2.5 chặn người dùng mới, 3.8/3.7/alias quá tải 503, 3.6-flash 200/~1.8s tiếng Việt có dấu; chi tiết ADR quyết định 4), gọi từ API route server-side, API key nằm trong biến môi trường Vercel.
 - **Lưu trữ**: LocalStorage (bookmark, lịch sử tra cứu) — không database trong v1.
 - **Deploy**: Vercel (free tier), domain dạng `*.vercel.app`.
 - **Ngôn ngữ nội dung**: tiếng Việt; prompt AI được viết để chỉ trả về món ăn gia đình Việt Nam phổ thông.
