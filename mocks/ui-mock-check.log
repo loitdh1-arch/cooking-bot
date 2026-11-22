@@ -1,0 +1,9 @@
+PASS 3 man hinh duoc nhan dan (found 3, expected 3)
+PASS bottom tab bar tren 3 dien thoai (found 3, expected 3)
+PASS step-art SVG cho tung buoc (4 div + 2 rule CSS) (found 6, expected 6)
+PASS CTA Goi y mon an (found 1, expected 1)
+PASS bottom tab: Mon da luu (found 4, expected 2)
+PASS KHONG JavaScript (mock tinh) (found 0, expected 0)
+PASS KHONG emoji trong UI (SVG icon thay the) (found 0, expected 0)
+
+mock-content-check: ALL PASS
