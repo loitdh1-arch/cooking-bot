@@ -38,10 +38,12 @@ function resolveSuggestSpec(body: unknown): Resolved<string[]> {
   if (!Array.isArray(raw)) {
     return { ok: false, error: "ingredients phải là mảng chuỗi, ví dụ [\"trứng\", \"cà chua\"]." };
   }
-  const items = raw
-    .map((v) => (typeof v === "string" ? v.trim() : ""))
-    .filter((s) => s.length > 0)
-    .map((s) => s.slice(0, 40)); // ràng buộc 1-40 ký tự sau trim của contract
+  const items = raw.map((v) => (typeof v === "string" ? v.trim() : ""));
+  // C-003 fix (bug suite phát hiện): contract "mỗi phần tử 1-40 ký tự sau trim" là TỪ CHỐI,
+  // không phải cắt ngắn lặng lẽ như bản C-002 từng làm bằng slice(0, 40).
+  if (items.some((s) => s.length === 0 || s.length > 40)) {
+    return { ok: false, error: "Mỗi nguyên liệu phải là chuỗi 1-40 ký tự (sau khi bỏ khoảng trắng)." };
+  }
   if (items.length < 2 || items.length > 8) {
     return { ok: false, error: "Cần từ 2 đến 8 nguyên liệu." };
   }
