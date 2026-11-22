@@ -57,7 +57,7 @@ Người mới tập nấu tại Việt Nam có nguyên liệu trong tủ lạnh
 
 - Mobile-first: layout hiển thị đúng trên màn hình rộng ≥ 320px; thiết kế theo breakdown điểm 375px (iPhone SE) làm chuẩn.
 - Thời gian phản hồi gợi ý: p95 ≤ 10 giây từ lúc nhấn "Gợi ý món ăn" đến khi danh sách hiển thị (trên kết nối 4G trung bình).
-- Tải trang: LCP ≤ 2.5 giây trên trang chủ (deploy Vercel edge).
+- Tải trang: LCP ≤ 2.5 giây trên trang chủ (deploy Cloudflare Workers edge với PoP tại Việt Nam — sửa từ "Vercel edge" ngày 2026-11-22 theo ADR 3/C-005).
 - Không cần đăng nhập; không lưu dữ liệu người dùng trên server — mọi dữ liệu người dùng (bookmark, lịch sử) chỉ nằm trong LocalStorage của trình duyệt.
 - Chi phí vận hành: 0đ — Vercel free tier + Gemini API free tier (rate limit RPM/RPD do Google điều chỉnh theo đợt — sửa 2026-11-22, trước ghi "15 request/phút"); quá giới hạn hiển thị fail-state của FR1.
 - Ngôn ngữ giao diện: tiếng Việt duy nhất trong v1.
@@ -69,7 +69,7 @@ Người mới tập nấu tại Việt Nam có nguyên liệu trong tủ lạnh
 - **Backend**: Next.js API Routes (route handlers) — không có server riêng.
 - **AI**: Google Gemini API (model `gemini-3.6-flash` trên free tier — chốt sau test thật 2026-11-22: 2.0 retired, 2.5 chặn người dùng mới, 3.8/3.7/alias quá tải 503, 3.6-flash 200/~1.8s tiếng Việt có dấu; chi tiết ADR quyết định 4), gọi từ API route server-side, API key nằm trong biến môi trường Vercel.
 - **Lưu trữ**: LocalStorage (bookmark, lịch sử tra cứu) — không database trong v1.
-- **Deploy**: Vercel (free tier), domain dạng `*.vercel.app`.
+- **Deploy**: Cloudflare Workers free tier (OpenNext — sửa từ Vercel ngày 2026-11-22 theo ADR quyết định 3, C-005), domain dạng `*.workers.dev`.
 - **Ngôn ngữ nội dung**: tiếng Việt; prompt AI được viết để chỉ trả về món ăn gia đình Việt Nam phổ thông.
 
 ## Success metric (numbers only)
