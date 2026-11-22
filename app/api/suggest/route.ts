@@ -192,7 +192,14 @@ export async function POST(request: Request) {
       return fail(429, "Vượt giới hạn request của Gemini free tier — vui lòng thử lại sau ít phút.");
     }
     if (!res.ok) {
-      return fail(502, `Gemini trả lỗi HTTP ${res.status}.`);
+      // C-005: đọc body lỗi của Google để hiển thị nguyên nhân thật (Google 400 có nhiều nghĩa)
+      let detail = "";
+      try {
+        detail = (await res.text()).replace(/\s+/g, " ").slice(0, 220);
+      } catch {
+        // swallow: chỉ lấy chi tiết lỗi để hiển thị; bỏ qua nếu body đọc không được
+      }
+      return fail(502, `Gemini trả lỗi HTTP ${res.status}.${detail ? ` ${detail}` : ""}`);
     }
 
     const data: unknown = await res.json();

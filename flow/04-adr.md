@@ -25,6 +25,16 @@ Short. The most valuable section is what you are NOT doing and why.
 > Vercel) — không đổi bản chất kiến trúc, chỉ nâng minor platform theo phương tiện cài
 > chính thức. Người vận hành được thông báo trong phiên build C-001.
 
+> **Sửa đổi ngày 2026-11-22 (C-005, KILL):** Operator yêu cầu thử chuyển deploy sang
+> Cloudflare Workers (PoP VN). Migration chạy tới deploy thật: healthz 200, nhưng Google
+> chặn Gemini API theo IP egress của CF Workers — lỗi gốc:
+> `{"message": "User location is not supported for the API use.", "status": "FAILED_PRECONDITION"}`
+> — trong khi CÙNG key gọi từ máy người vận hành (HTTP 200) và từ Vercel production
+> (đã verify C-002) đều hoạt động. Hard blocker hạ tầng, không sửa được từ code.
+> **Quyết định KILL migration — deploy target giữ nguyên Vercel** (quyết định 3 bên trên
+> không đổi). Full bằng chứng trong `cards/C-005.md`. Không thử lại nếu chưa có bằng
+> mới (IP egress được Google chấp nhận, hoặc đổi provider AI).
+
 > **Sửa đổi ngày 2026-11-22 (chuẩn bị C-002), hoàn tất sau test thật:** Quyết định 4 ghi ban
 > đầu model `gemini-2.0-flash` với "15 req/phút". Kiểm tra bằng API key thật (2026-11-22):
 > gọi generateContent trên 2.5-flash bị Google **chặn cho người dùng mới** (404 "no longer

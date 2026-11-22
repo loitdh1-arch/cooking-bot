@@ -47,4 +47,7 @@ next-env.d.ts
 /MODE
 /PROJECT_TYPE
 
+# OpenNext build output (C-005 lesson: never commit build artifacts)
+/.open-next/
+
 .vercel
