@@ -46,3 +46,5 @@ next-env.d.ts
 /cards/.inflight
 /MODE
 /PROJECT_TYPE
+
+.vercel
