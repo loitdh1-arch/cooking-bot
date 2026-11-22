@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bếp Nhà — UI mock v4 (C-004)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #FFFDFA;
+    --bg-subtle: #FFF7ED;
+    --bg-muted: #FDF0E0;
+    --fg-base: #2D1B0E;
+    --fg-muted: #6B5544;
+    --fg-subtle: #96826F;
+    --border: #F3E3CF;
+    --brand: #F97316;
+    --brand-deep: #EA580C;
+    --c-egg: #FCD34D;
+    --c-tomato: #F87171;
+    --c-onion: #C4B5FD;
+    --c-pork: #F9A8D4;
+    --c-greens: #86EFAC;
+    --grad-sunrise: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 55%, #FED7AA 100%);
+    --grad-ember: linear-gradient(135deg, #FDBA74 0%, #F97316 100%);
+    --grad-mint: linear-gradient(135deg, #ECFDF3 0%, #D1F4DD 100%);
+    --grad-rose: linear-gradient(135deg, #FFF1F4 0%, #FDDDE3 100%);
+    --shadow-card: 0 2px 8px rgba(249,115,22,.08), 0 12px 32px rgba(45,27,14,.10);
+    --shadow-cta: 0 6px 16px rgba(249,115,22,.28), 0 16px 40px rgba(234,88,12,.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-subtle); font-family: 'Inter', system-ui, sans-serif; color: var(--fg-base); padding: 24px; }
+  .review-head { max-width: 1240px; margin: 0 auto 20px; font-size: 13px; color: var(--fg-subtle); }
+  .review-head strong { color: var(--fg-base); font-weight: 600; }
+  .frames { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .frame-wrap { width: 375px; }
+  .frame-label { font-size: 12px; font-weight: 600; color: var(--fg-muted); margin-bottom: 8px; letter-spacing: .02em; }
+  .phone {
+    background: var(--bg-base); border: 1px solid var(--border); border-radius: 28px;
+    overflow: hidden; min-height: 760px; display: flex; flex-direction: column;
+    box-shadow: var(--shadow-card);
+  }
+  .appbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-base) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 9px; }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 11px;
+    background: var(--grad-ember);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(249,115,22,.30);
+  }
+  .logo-mark svg { width: 19px; height: 19px; stroke: #fff; }
+  .wordmark { font-family: 'Fraunces', serif; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--grad-sunrise); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: var(--fg-muted);
+  }
+  .back { display: flex; align-items: center; gap: 5px; color: var(--fg-muted); font-size: 13px; font-weight: 600; }
+  .back svg { width: 14px; height: 14px; stroke: var(--fg-muted); }
+  .screen { padding: 18px 16px 22px; flex: 1; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 26px; line-height: 1.22; letter-spacing: -0.01em; }
+  .sub { color: var(--fg-muted); font-size: 14px; line-height: 1.5; margin-top: 7px; }
+  .label { font-size: 12px; font-weight: 600; color: var(--fg-muted); margin: 22px 0 10px; letter-spacing: .01em; }
+
+  .input-bar {
+    margin-top: 18px; background: #fff; border: 1px solid var(--border);
+    border-radius: 18px; padding: 12px; box-shadow: var(--shadow-card);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    border-radius: 999px; padding: 8px 13px;
+    font-size: 13px; font-weight: 600; color: var(--fg-base);
+    border: 1px solid var(--border); background: #fff;
+    box-shadow: 0 1px 3px rgba(45,27,14,.05);
+  }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .chip svg.x { width: 13px; height: 13px; stroke: var(--fg-subtle); }
+  .chip.add { border: 1.5px dashed var(--fg-subtle); color: var(--fg-subtle); box-shadow: none; }
+
+  .cta-main {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    margin-top: 26px; height: 56px; border-radius: 999px;
+    background: var(--grad-ember);
+    font-size: 17px; font-weight: 700; color: #fff;
+    box-shadow: var(--shadow-cta);
+    letter-spacing: .01em;
+  }
+  .cta-main svg { width: 21px; height: 21px; stroke: #fff; }
+  .saved-empty {
+    margin-top: 26px; border: 1.5px dashed var(--border); border-radius: 18px;
+    padding: 16px; display: flex; align-items: center; gap: 12px;
+    background: var(--grad-mint);
+  }
+  .saved-empty .ic {
+    width: 38px; height: 38px; border-radius: 12px; background: #fff;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(45,27,14,.08);
+  }
+  .saved-empty svg { width: 18px; height: 18px; stroke: var(--fg-muted); }
+  .saved-empty .t { font-size: 13.5px; font-weight: 700; }
+  .saved-empty .d { font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+
+  .ctx-line { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .ctx-line .have { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-muted); font-weight: 500; }
+  .dots { display: flex; gap: 4px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .ctx-line a { font-size: 13px; font-weight: 700; color: var(--brand); text-decoration: none; }
+
+  .dish {
+    border-radius: 22px; margin-top: 16px; overflow: hidden;
+    background: #fff; border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+  .dish .cover { height: 132px; background: var(--grad-sunrise); position: relative; }
+  .dish .cover svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .dish .body { padding: 15px 16px 16px; }
+  .dish .name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 19px; }
+  .badges { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    border-radius: 999px; padding: 5px 10px; font-size: 11.5px; font-weight: 700;
+  }
+  .badge svg { width: 12px; height: 12px; }
+  .badge.time { background: var(--bg-muted); color: var(--fg-muted); }
+  .badge.time .m { font-family: 'JetBrains Mono', monospace; color: var(--brand-deep); }
+  .badge.easy { background: var(--grad-mint); color: #166534; }
+  .badge.steps { background: var(--bg-muted); color: var(--fg-muted); }
+  .badge.steps .m { font-family: 'JetBrains Mono', monospace; }
+  .dish .ing { margin-top: 11px; font-size: 13px; line-height: 1.5; color: var(--fg-muted); font-weight: 500; }
+  .dish .miss { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: var(--fg-subtle); }
+  .dish .miss b { font-weight: 700; color: var(--fg-muted); }
+  .dish .go { display: inline-flex; align-items: center; gap: 5px; margin-top: 13px; font-size: 13.5px; font-weight: 700; color: var(--brand); }
+  .dish .go svg { width: 15px; height: 15px; stroke: var(--brand); }
+  .bottom-note { margin-top: 18px; text-align: center; font-size: 12.5px; color: var(--fg-subtle); }
+  .bottom-note a { color: var(--brand); font-weight: 700; text-decoration: none; }
+
+  .hero-art {
+    margin-top: 4px; height: 170px; border-radius: 22px; overflow: hidden;
+    background: var(--grad-sunrise); position: relative;
+    border: 1px solid var(--border); box-shadow: var(--shadow-card);
+  }
+  .hero-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .detail-pulse { display: flex; gap: 9px; margin-top: 14px; flex-wrap: wrap; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 16px; }
+  .hero {
+    flex: 1; border-radius: 18px; padding: 14px;
+    display: flex; align-items: center; gap: 11px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-card);
+  }
+  .hero .ic { width: 40px; height: 40px; border-radius: 13px; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .hero svg { width: 19px; height: 19px; stroke: var(--fg-base); }
+  .hero .t { font-size: 14px; font-weight: 700; }
+  .hero .d { font-size: 11px; color: var(--fg-muted); margin-top: 1px; }
+  .hero.save { background: var(--grad-mint); }
+  .hero.copy { background: var(--grad-rose); }
+
+  .ing-list { margin-top: 10px; }
+  .ing-item { display: flex; align-items: center; gap: 11px; padding: 11px 2px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 500; }
+  .ing-item:last-child { border-bottom: none; }
+  .ing-item .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .ing-item .qty { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--fg-muted); }
+
+  .steps { margin-top: 12px; }
+  .step { display: flex; gap: 12px; position: relative; padding-bottom: 20px; }
+  .step:last-child { padding-bottom: 2px; }
+  .step::before { content: ""; position: absolute; left: 16px; top: 34px; bottom: 0; width: 2px; background: var(--border); border-radius: 2px; }
+  .step:last-child::before { display: none; }
+  .step-art {
+    width: 56px; height: 56px; border-radius: 14px; flex-shrink: 0;
+    background: var(--grad-sunrise); border: 1px solid var(--border);
+    box-shadow: 0 2px 6px rgba(45,27,14,.08);
+    position: relative; z-index: 1; overflow: hidden;
+  }
+  .step-art svg { width: 100%; height: 100%; }
+  .step .txt { font-size: 14px; line-height: 1.55; padding-top: 5px; flex: 1; }
+  .num {
+    width: 33px; height: 33px; border-radius: 50%; flex-shrink: 0;
+    background: var(--grad-ember); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px;
+    box-shadow: 0 4px 10px rgba(249,115,22,.26); position: relative; z-index: 1;
+  }
+  .step .row2 { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .step input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--brand); }
+  .step .min {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    color: var(--brand-deep); background: var(--bg-muted);
+    border-radius: 999px; padding: 3px 9px;
+  }
+  .step .tick-lbl { font-size: 11.5px; color: var(--fg-subtle); font-weight: 600; }
+
+  .tabbar {
+    display: flex; gap: 6px; border-top: 1px solid var(--border);
+    background: #fff; padding: 8px 12px 12px;
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; color: var(--fg-subtle);
+    padding: 7px 0 5px; border-radius: 13px;
+  }
+  .tab svg { width: 21px; height: 21px; stroke: currentColor; }
+  .tab.active { color: var(--brand-deep); background: var(--bg-muted); }
+</style>
+</head>
+<body>
+<div class="review-head"><strong>Bếp Nhà — UI mock v4 · C-004</strong> · premium layered art + bottom menu · Warm Kitchen tokens (DESIGN.md 2026-11-22) · dữ liệu món là output thật từ API production</div>
+<div class="frames">
+
+<div class="frame-wrap">
+<div class="frame-label">MÀN 1 · TRANG CHỦ — NHẬP NGUYÊN LIỆU</div>
+<div class="phone">
+  <div class="appbar">
+    <div class="brand">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15a6 6 0 0 0 12 0M6 15V8m0 7H4m14 0h2M9 8V5m6 3V5M6 8h12"/></svg></div>
+      <div class="wordmark">Bếp Nhà</div>
+    </div>
+    <div class="avatar">A</div>
+  </div>
+  <div class="screen">
+    <h1>Hôm nay nấu gì?</h1>
+    <div class="sub">Cho mình biết trong tủ lạnh có gì — mình gợi ngay món nấu được.</div>
+
+    <div class="input-bar">
+      <div class="chips">
+        <span class="chip"><span class="dot" style="background:var(--c-egg)"></span>trứng <svg class="x" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="chip"><span class="dot" style="background:var(--c-tomato)"></span>cà chua <svg class="x" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="chip"><span class="dot" style="background:var(--c-onion)"></span>hành tây <svg class="x" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="chip add">+ Thêm nguyên liệu</span>
+      </div>
+    </div>
+
+    <div class="label">HAY CHỌN NHANH</div>
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:var(--c-pork)"></span>thịt heo</span>
+      <span class="chip"><span class="dot" style="background:#FCA5A5"></span>thịt bò</span>
+      <span class="chip"><span class="dot" style="background:#FDE68A"></span>đậu phụ</span>
+      <span class="chip"><span class="dot" style="background:#FBBF24"></span>khoai tây</span>
+      <span class="chip"><span class="dot" style="background:var(--c-greens)"></span>rau muống</span>
+      <span class="chip"><span class="dot" style="background:#D6D3D1"></span>tỏi</span>
+      <span class="chip"><span class="dot" style="background:#FDE68A"></span>gạo</span>
+      <span class="chip"><span class="dot" style="background:#FDBA74"></span>mì gói</span>
+    </div>
+
+    <div class="cta-main">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m6.4 3.6-2.1 2.1M21 12h-3M6.4 9.6l-2.1-2.1M3 12h3m3.5 3.5a4.9 4.9 0 0 1 5 0M8 21a7 7 0 0 0 8 0M9.5 6.5a2.7 2.7 0 0 1 5 0"/></svg>
+      Gợi ý món ăn
+    </div>
+
+    <div class="saved-empty">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div>
+      <div>
+        <div class="t">Món đã lưu</div>
+        <div class="d">Chưa có món nào — nấu ngon thì bấm "Lưu món" nhé.</div>
+      </div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+      Gợi ý món
+    </div>
+    <div class="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg>
+      Món đã lưu
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="frame-wrap">
+<div class="frame-label">MÀN 2 · MÓN NẤU ĐƯỢC NGAY — DANH SÁCH</div>
+<div class="phone">
+  <div class="appbar">
+    <div class="brand">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15a6 6 0 0 0 12 0M6 15V8m0 7H4m14 0h2M9 8V5m6 3V5M6 8h12"/></svg></div>
+      <div class="wordmark">Bếp Nhà</div>
+    </div>
+    <div class="back"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg> Đổi nguyên liệu</div>
+  </div>
+  <div class="screen">
+    <h1>Món nấu được ngay</h1>
+    <div class="ctx-line">
+      <span class="have"><span class="dots"><i style="background:var(--c-egg)"></i><i style="background:var(--c-tomato)"></i><i style="background:var(--c-onion)"></i></span> Từ nguyên liệu của bạn</span>
+      <a href="#">Nhập lại</a>
+    </div>
+
+    <div class="dish">
+      <div class="cover">
+        <svg viewBox="0 0 375 132" fill="none">
+          <circle cx="52" cy="30" r="26" fill="url(#bk1)"/>
+          <circle cx="330" cy="24" r="20" fill="url(#bk2)"/>
+          <circle cx="300" cy="100" r="30" fill="url(#bk2)"/>
+          <ellipse cx="187" cy="112" rx="128" ry="12" fill="url(#gs1)"/>
+          <ellipse cx="187" cy="92" rx="95" ry="46" fill="url(#pl1)"/>
+          <ellipse cx="187" cy="92" rx="78" ry="36" fill="#FFFDF6" opacity=".55"/>
+          <path d="M126 62c-8-20 10-36 28-32 10-14 36-14 46 0 22-6 36 12 26 32 10 14 0 26-18 26h-62c-16 0-24-12-20-26z" fill="url(#ew1)" stroke="#F0DFC4" stroke-width="1.6"/>
+          <ellipse cx="187" cy="72" rx="30" ry="12" fill="#FED7AA" opacity=".5"/>
+          <circle cx="187" cy="64" r="19" fill="url(#yo1)"/>
+          <ellipse cx="180" cy="57" rx="7" ry="4.6" fill="#FFFBF2" opacity=".92" transform="rotate(-18 180 57)"/>
+          <path d="M172 73a19 19 0 0 1 8-14" stroke="#FDE68A" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+          <circle cx="118" cy="86" r="17" fill="url(#to1)" stroke="#E11D48" stroke-width="1.4"/>
+          <circle cx="118" cy="86" r="11" fill="#F87171" opacity=".8"/>
+          <path d="M113 82l3-3 2 3 3-3 2 3M112 90l4 3 3-3 4 3M113 95l3 2 2-2" stroke="#FECDD3" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M118 66l-2-7 4 1z" fill="#65A30D"/>
+          <circle cx="262" cy="88" r="14" fill="url(#to1)" stroke="#E11D48" stroke-width="1.4"/>
+          <circle cx="262" cy="88" r="9" fill="#F87171" opacity=".8"/>
+          <path d="M258 85l2-2 2 2 2-2 2 2M257 91l3 2 3-2" stroke="#FECDD3" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M262 72l-1-6 3 1z" fill="#65A30D"/>
+          <path d="M84 46c9 7 9 18 0 26M79 51c5 4 5 12 0 16" stroke="url(#on1)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M292 44c-9 7-9 18 0 26M297 49c-5 4-5 12 0 16" stroke="url(#on1)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M150 32l5 10M224 28l-4 9M136 76l-8 4M248 72l8 5" stroke="url(#hb1)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M160 22q3-5 0-10M200 24q3-5 0-10" stroke="#D9A06B" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          <defs>
+            <radialGradient id="bk1"><stop offset="0" stop-color="#FDBA74" stop-opacity=".55"/><stop offset="1" stop-color="#FDBA74" stop-opacity="0"/></radialGradient>
+            <radialGradient id="bk2"><stop offset="0" stop-color="#FCD34D" stop-opacity=".5"/><stop offset="1" stop-color="#FCD34D" stop-opacity="0"/></radialGradient>
+            <radialGradient id="gs1"><stop offset="0" stop-color="#2D1B0E" stop-opacity=".22"/><stop offset="1" stop-color="#2D1B0E" stop-opacity="0"/></radialGradient>
+            <linearGradient id="pl1" x1="0" y1="50" x2="0" y2="132"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3E3CF"/></linearGradient>
+            <linearGradient id="ew1" x1="0" y1="30" x2="0" y2="90"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#F9EEDA"/></linearGradient>
+            <radialGradient id="yo1" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#FDE68A"/><stop offset=".55" stop-color="#FBBF24"/><stop offset="1" stop-color="#E8930C"/></radialGradient>
+            <radialGradient id="to1" cx=".4" cy=".32" r=".95"><stop offset="0" stop-color="#FB7185"/><stop offset=".6" stop-color="#EF4444"/><stop offset="1" stop-color="#DC2626"/></radialGradient>
+            <linearGradient id="on1" x1="0" y1="46" x2="0" y2="72"><stop offset="0" stop-color="#C4B5FD"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+            <linearGradient id="hb1" x1="0" y1="30" x2="0" y2="80"><stop offset="0" stop-color="#86EFAC"/><stop offset="1" stop-color="#16A34A"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="name">Trứng chiên cà chua hành tây</div>
+        <div class="badges">
+          <span class="badge time"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="m">~15′</span></span>
+          <span class="badge easy"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 7"/></svg>Dễ</span>
+          <span class="badge steps"><span class="m">4</span> bước</span>
+        </div>
+        <div class="ing">Có sẵn: 3 quả trứng, 1 quả cà chua, 1/2 củ hành tây</div>
+        <div class="miss"><b>Bếp cần sẵn:</b> dầu ăn, nước mắm, hạt nêm, hành lá</div>
+        <div class="go">Xem cách nấu <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="dish">
+      <div class="cover" style="background: var(--grad-mint);">
+        <svg viewBox="0 0 375 132" fill="none">
+          <circle cx="60" cy="34" r="24" fill="url(#bk3)"/>
+          <circle cx="320" cy="100" r="26" fill="url(#bk4)"/>
+          <ellipse cx="187" cy="112" rx="128" ry="12" fill="url(#gs2)"/>
+          <ellipse cx="187" cy="90" rx="92" ry="44" fill="url(#pl2)"/>
+          <ellipse cx="187" cy="90" rx="75" ry="34" fill="#FFFDF6" opacity=".6"/>
+          <path d="M130 60c-8-18 9-32 26-29 9-13 33-13 42 0 20-5 32 11 24 29 9 13 0 24-16 24h-58c-15 0-22-11-18-24z" fill="url(#ew2)" stroke="#F0DFC4" stroke-width="1.6"/>
+          <ellipse cx="187" cy="70" rx="28" ry="11" fill="#FDBA74" opacity=".45"/>
+          <circle cx="187" cy="62" r="18" fill="url(#yo2)"/>
+          <ellipse cx="180" cy="55" rx="6.6" ry="4.2" fill="#FFFBF2" opacity=".92" transform="rotate(-18 180 55)"/>
+          <path d="M126 84c28 18 96 18 124 0" stroke="url(#sc2)" stroke-width="9" stroke-linecap="round"/>
+          <path d="M132 82c26 12 82 12 110 0" stroke="#FB7185" stroke-width="3.4" stroke-linecap="round" opacity=".85"/>
+          <path d="M144 92c22 8 66 8 88 0" stroke="#FCA5A5" stroke-width="2.6" stroke-linecap="round" opacity=".7"/>
+          <circle cx="120" cy="34" r="12" fill="url(#to2)" stroke="#E11D48" stroke-width="1.2"/>
+          <path d="M117 32h6M117 35h6" stroke="#FECDD3" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="262" cy="36" r="9" fill="url(#to2)" stroke="#E11D48" stroke-width="1.2"/>
+          <path d="M259 34h6M259 37h6" stroke="#FECDD3" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M156 26q3-5 0-10M214 24q3-5 0-10" stroke="#D9A06B" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+          <path d="M162 96l4 8M220 94l-3 8" stroke="url(#hb2)" stroke-width="2.8" stroke-linecap="round"/>
+          <defs>
+            <radialGradient id="bk3"><stop offset="0" stop-color="#86EFAC" stop-opacity=".55"/><stop offset="1" stop-color="#86EFAC" stop-opacity="0"/></radialGradient>
+            <radialGradient id="bk4"><stop offset="0" stop-color="#FCA5A5" stop-opacity=".5"/><stop offset="1" stop-color="#FCA5A5" stop-opacity="0"/></radialGradient>
+            <radialGradient id="gs2"><stop offset="0" stop-color="#2D1B0E" stop-opacity=".2"/><stop offset="1" stop-color="#2D1B0E" stop-opacity="0"/></radialGradient>
+            <linearGradient id="pl2" x1="0" y1="48" x2="0" y2="128"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3E3CF"/></linearGradient>
+            <linearGradient id="ew2" x1="0" y1="28" x2="0" y2="86"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#F9EEDA"/></linearGradient>
+            <radialGradient id="yo2" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#FDE68A"/><stop offset=".55" stop-color="#FBBF24"/><stop offset="1" stop-color="#E8930C"/></radialGradient>
+            <linearGradient id="sc2" x1="0" y1="84" x2="0" y2="96"><stop offset="0" stop-color="#EF4444"/><stop offset="1" stop-color="#C81E1E"/></linearGradient>
+            <radialGradient id="to2" cx=".4" cy=".32" r=".95"><stop offset="0" stop-color="#FB7185"/><stop offset=".6" stop-color="#EF4444"/><stop offset="1" stop-color="#DC2626"/></radialGradient>
+            <linearGradient id="hb2" x1="0" y1="90" x2="0" y2="106"><stop offset="0" stop-color="#86EFAC"/><stop offset="1" stop-color="#16A34A"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="name">Trứng sốt cà chua</div>
+        <div class="badges">
+          <span class="badge time"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="m">~15′</span></span>
+          <span class="badge easy"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 7"/></svg>Dễ</span>
+          <span class="badge steps"><span class="m">4</span> bước</span>
+        </div>
+        <div class="ing">Có sẵn: 3 quả trứng, 2 quả cà chua</div>
+        <div class="miss"><b>Bếp cần sẵn:</b> dầu ăn, nước mắm, đường, hành khô</div>
+        <div class="go">Xem cách nấu <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="bottom-note">Không thấy món ưng? <a href="#">Thử thêm nguyên liệu khác</a></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+      Gợi ý món
+    </div>
+    <div class="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg>
+      Món đã lưu
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="frame-wrap">
+<div class="frame-label">MÀN 3 · CHI TIẾT MÓN — CÁCH NẤU TỪNG BƯỚC</div>
+<div class="phone">
+  <div class="appbar">
+    <div class="brand">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15a6 6 0 0 0 12 0M6 15V8m0 7H4m14 0h2M9 8V5m6 3V5M6 8h12"/></svg></div>
+      <div class="wordmark">Bếp Nhà</div>
+    </div>
+    <div class="back"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg> Danh sách món</div>
+  </div>
+  <div class="screen">
+    <div class="hero-art">
+      <svg viewBox="0 0 343 170" fill="none">
+        <circle cx="48" cy="38" r="30" fill="url(#bk5)"/>
+        <circle cx="300" cy="30" r="22" fill="url(#bk6)"/>
+        <circle cx="292" cy="132" r="34" fill="url(#bk6)"/>
+        <ellipse cx="171" cy="146" rx="150" ry="13" fill="url(#gs3)"/>
+        <ellipse cx="171" cy="112" rx="108" ry="52" fill="url(#pl3)"/>
+        <ellipse cx="171" cy="112" rx="88" ry="40" fill="#FFFDF6" opacity=".55"/>
+        <path d="M102 66c-9-22 11-40 31-35 11-16 40-16 51 0 24-7 40 13 29 35 11 16 0 29-20 29h-70c-18 0-27-13-21-29z" fill="url(#ew3)" stroke="#F0DFC4" stroke-width="1.8"/>
+        <ellipse cx="171" cy="88" rx="34" ry="13" fill="#FED7AA" opacity=".5"/>
+        <circle cx="171" cy="79" r="22" fill="url(#yo3)"/>
+        <ellipse cx="163" cy="71" rx="8" ry="5" fill="#FFFBF2" opacity=".92" transform="rotate(-18 163 71)"/>
+        <path d="M154 88a22 22 0 0 1 9-16" stroke="#FDE68A" stroke-width="3.4" stroke-linecap="round" opacity=".6"/>
+        <circle cx="98" cy="104" r="20" fill="url(#to3)" stroke="#E11D48" stroke-width="1.6"/>
+        <circle cx="98" cy="104" r="13" fill="#F87171" opacity=".8"/>
+        <path d="M92 99l4-4 3 4 4-4 3 4M90 108l5 4 4-4 5 4M92 115l4 3 3-3" stroke="#FECDD3" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M98 80l-3-8 5 1z" fill="#65A30D"/>
+        <circle cx="248" cy="106" r="16" fill="url(#to3)" stroke="#E11D48" stroke-width="1.6"/>
+        <circle cx="248" cy="106" r="10" fill="#F87171" opacity=".8"/>
+        <path d="M243 102l3-3 3 3 3-3 3 3M242 110l4 3 3-3 4 3" stroke="#FECDD3" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M248 86l-2-7 4 1z" fill="#65A30D"/>
+        <path d="M60 58c10 8 10 20 0 29M54 64c6 5 6 14 0 18" stroke="url(#on3)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M284 56c-10 8-10 20 0 29M290 62c-6 5-6 14 0 18" stroke="url(#on3)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M126 34l6 12M218 30l-5 11M112 90l-9 5M240 84l9 6" stroke="url(#hb3)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M140 16q4-6 0-12M196 18q4-6 0-12" stroke="#D9A06B" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+        <defs>
+          <radialGradient id="bk5"><stop offset="0" stop-color="#FDBA74" stop-opacity=".6"/><stop offset="1" stop-color="#FDBA74" stop-opacity="0"/></radialGradient>
+          <radialGradient id="bk6"><stop offset="0" stop-color="#FCD34D" stop-opacity=".55"/><stop offset="1" stop-color="#FCD34D" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gs3"><stop offset="0" stop-color="#2D1B0E" stop-opacity=".24"/><stop offset="1" stop-color="#2D1B0E" stop-opacity="0"/></radialGradient>
+          <linearGradient id="pl3" x1="0" y1="60" x2="0" y2="168"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3E3CF"/></linearGradient>
+          <linearGradient id="ew3" x1="0" y1="32" x2="0" y2="98"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#F9EEDA"/></linearGradient>
+          <radialGradient id="yo3" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#FDE68A"/><stop offset=".55" stop-color="#FBBF24"/><stop offset="1" stop-color="#E8930C"/></radialGradient>
+          <radialGradient id="to3" cx=".4" cy=".32" r=".95"><stop offset="0" stop-color="#FB7185"/><stop offset=".6" stop-color="#EF4444"/><stop offset="1" stop-color="#DC2626"/></radialGradient>
+          <linearGradient id="on3" x1="0" y1="58" x2="0" y2="88"><stop offset="0" stop-color="#C4B5FD"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+          <linearGradient id="hb3" x1="0" y1="34" x2="0" y2="92"><stop offset="0" stop-color="#86EFAC"/><stop offset="1" stop-color="#16A34A"/></linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1 style="margin-top:16px">Trứng chiên cà chua hành tây</h1>
+    <div class="detail-pulse">
+      <span class="badge time"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tổng <span class="m">~15′</span></span>
+      <span class="badge easy"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 7"/></svg>Dễ</span>
+      <span class="badge steps"><span class="m">4</span> bước nấu</span>
+    </div>
+
+    <div class="hero-actions">
+      <div class="hero save">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div>
+        <div><div class="t">Lưu món</div><div class="d">xem lại lúc nấu sau</div></div>
+      </div>
+      <div class="hero copy">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></div>
+        <div><div class="t">Sao chép công thức</div><div class="d">dán vào Zalo, Facebook</div></div>
+      </div>
+    </div>
+
+    <div class="label">NGUYÊN LIỆU</div>
+    <div class="ing-list">
+      <div class="ing-item"><span class="dot" style="background:var(--c-egg)"></span> Trứng <span class="qty">3 quả</span></div>
+      <div class="ing-item"><span class="dot" style="background:var(--c-tomato)"></span> Cà chua <span class="qty">1 quả</span></div>
+      <div class="ing-item"><span class="dot" style="background:var(--c-onion)"></span> Hành tây <span class="qty">1/2 củ</span></div>
+    </div>
+
+    <div class="label">BẾP CẦN SẴN</div>
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:#FDBA74"></span>dầu ăn</span>
+      <span class="chip"><span class="dot" style="background:#A3E635"></span>nước mắm</span>
+      <span class="chip"><span class="dot" style="background:#FDE68A"></span>hạt nêm</span>
+      <span class="chip"><span class="dot" style="background:var(--c-greens)"></span>hành lá</span>
+    </div>
+
+    <div class="label">CÁCH NẤU — TỪNG BƯỚC MỘT</div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="txt">Sơ chế: cà chua thái hạt lựu, hành tây thái mỏng, trứng đập ra bát đánh tan với 1 thìa cà phê nước mắm.
+          <div class="row2"><input type="checkbox"><span class="tick-lbl">Đã xong</span><span class="min">~5′</span></div>
+        </div>
+        <div class="step-art">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="6" y="34" width="40" height="12" rx="3" fill="url(#wb1)" stroke="#D97706" stroke-width="1.5"/>
+            <path d="M10 38h32M10 42h32" stroke="#D97706" stroke-width="1" opacity=".45"/>
+            <circle cx="17" cy="27" r="8" fill="url(#st1)" stroke="#DC2626" stroke-width="1.5"/>
+            <path d="M13 26h8M13 29h8" stroke="#FECDD3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M38 30c0 6 3 9 7 9s7-3 7-9" fill="url(#bw1)" stroke="#E7D5BC" stroke-width="1.5"/>
+            <circle cx="45" cy="27" r="4.4" fill="url(#sy1)" stroke="#D97706" stroke-width="1"/>
+            <ellipse cx="43.5" cy="25.5" rx="1.8" ry="1.1" fill="#FFFBF2" opacity=".95" transform="rotate(-18 43.5 25.5)"/>
+            <path d="M45 22V12" stroke="#96826F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M52 12l3-3" stroke="#96826F" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="wb1" x1="0" y1="34" x2="0" y2="46"><stop offset="0" stop-color="#FDE68A"/><stop offset="1" stop-color="#D97706"/></linearGradient>
+              <radialGradient id="st1" cx=".4" cy=".32" r=".95"><stop offset="0" stop-color="#FB7185"/><stop offset=".6" stop-color="#EF4444"/><stop offset="1" stop-color="#DC2626"/></radialGradient>
+              <linearGradient id="bw1" x1="0" y1="30" x2="0" y2="40"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#EFDCC0"/></linearGradient>
+              <radialGradient id="sy1" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#FDE68A"/><stop offset="1" stop-color="#E8930C"/></radialGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="txt">Đun nóng dầu ăn trên chảo, cho hành tây vào xào thơm.
+          <div class="row2"><input type="checkbox"><span class="tick-lbl">Đã xong</span><span class="min">~2′</span></div>
+        </div>
+        <div class="step-art">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="36" y="27" width="15" height="5" rx="2.5" fill="#334155"/>
+            <circle cx="25" cy="30" r="15" fill="url(#pn1)" stroke="#1E293B" stroke-width="2"/>
+            <circle cx="25" cy="30" r="11" fill="url(#pi1)"/>
+            <circle cx="20" cy="27" r="2" fill="#FDBA74"/>
+            <circle cx="30" cy="32" r="1.6" fill="#FDBA74"/>
+            <path d="M18 29a8 8 0 0 1 13-1" stroke="#A78BFA" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M22 33a7 7 0 0 0 8-3" stroke="#A78BFA" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M17 49q2-3 0-6M25 51q2-3 0-6M33 49q2-3 0-6" stroke="url(#fl1)" stroke-width="2.2" stroke-linecap="round"/>
+            <defs>
+              <radialGradient id="pn1" cx=".4" cy=".35" r=".95"><stop offset="0" stop-color="#64748B"/><stop offset="1" stop-color="#334155"/></radialGradient>
+              <radialGradient id="pi1" cx=".45" cy=".4" r=".9"><stop offset="0" stop-color="#7C8DA3"/><stop offset="1" stop-color="#475569"/></radialGradient>
+              <linearGradient id="fl1" x1="0" y1="43" x2="0" y2="51"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#EA580C"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="txt">Cho cà chua vào xào mềm, nêm chút hạt nêm.
+          <div class="row2"><input type="checkbox"><span class="tick-lbl">Đã xong</span><span class="min">~3′</span></div>
+        </div>
+        <div class="step-art">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="36" y="27" width="15" height="5" rx="2.5" fill="#334155"/>
+            <circle cx="25" cy="30" r="15" fill="url(#pn2)" stroke="#1E293B" stroke-width="2"/>
+            <circle cx="25" cy="30" r="11" fill="url(#pi2)"/>
+            <circle cx="21" cy="27" r="4" fill="url(#st3)" stroke="#DC2626" stroke-width="1"/>
+            <circle cx="29" cy="31" r="3.4" fill="url(#st3)" stroke="#DC2626" stroke-width="1"/>
+            <circle cx="24" cy="33" r="2.6" fill="#FCA5A5" stroke="#DC2626" stroke-width="1"/>
+            <path d="M17 13q2-3 0-6M26 12q2-3 0-6M35 13q2-3 0-6" stroke="#B8A48D" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+            <path d="M17 49q2-3 0-6M25 51q2-3 0-6M33 49q2-3 0-6" stroke="url(#fl2)" stroke-width="2.2" stroke-linecap="round"/>
+            <defs>
+              <radialGradient id="pn2" cx=".4" cy=".35" r=".95"><stop offset="0" stop-color="#64748B"/><stop offset="1" stop-color="#334155"/></radialGradient>
+              <radialGradient id="pi2" cx=".45" cy=".4" r=".9"><stop offset="0" stop-color="#7C8DA3"/><stop offset="1" stop-color="#475569"/></radialGradient>
+              <radialGradient id="st3" cx=".4" cy=".32" r=".95"><stop offset="0" stop-color="#FB7185"/><stop offset=".6" stop-color="#EF4444"/><stop offset="1" stop-color="#DC2626"/></radialGradient>
+              <linearGradient id="fl2" x1="0" y1="43" x2="0" y2="51"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#EA580C"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div class="txt">Đổ trứng vào chảo, tráng đều và đun ở lửa nhỏ cho đến khi trứng chín tới thì tắt bếp.
+          <div class="row2"><input type="checkbox"><span class="tick-lbl">Đã xong</span><span class="min">~5′</span></div>
+        </div>
+        <div class="step-art">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="36" y="27" width="15" height="5" rx="2.5" fill="#334155"/>
+            <circle cx="25" cy="30" r="15" fill="url(#pn4)" stroke="#1E293B" stroke-width="2"/>
+            <circle cx="25" cy="30" r="11" fill="url(#pi4)"/>
+            <path d="M17 27c0-3 3-5 8-5s10 2 10 5 2 9-8 9-10-6-10-9z" fill="url(#ew4)" stroke="#E7D5BC" stroke-width="1.4"/>
+            <circle cx="24" cy="29" r="4.6" fill="url(#sy4)" stroke="#D97706" stroke-width="1"/>
+            <ellipse cx="22.4" cy="27.3" rx="1.9" ry="1.2" fill="#FFFBF2" opacity=".95" transform="rotate(-18 22.4 27.3)"/>
+            <path d="M12 6q2 8 10 11" stroke="#FDE68A" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="22" cy="17" r="2.6" fill="#FBBF24"/>
+            <path d="M17 49q2-3 0-6M25 51q2-3 0-6M33 49q2-3 0-6" stroke="url(#fl4)" stroke-width="2.2" stroke-linecap="round"/>
+            <defs>
+              <radialGradient id="pn4" cx=".4" cy=".35" r=".95"><stop offset="0" stop-color="#64748B"/><stop offset="1" stop-color="#334155"/></radialGradient>
+              <radialGradient id="pi4" cx=".45" cy=".4" r=".9"><stop offset="0" stop-color="#7C8DA3"/><stop offset="1" stop-color="#475569"/></radialGradient>
+              <linearGradient id="ew4" x1="0" y1="22" x2="0" y2="36"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#F5E9D4"/></linearGradient>
+              <radialGradient id="sy4" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#FDE68A"/><stop offset=".6" stop-color="#FBBF24"/><stop offset="1" stop-color="#E8930C"/></radialGradient>
+              <linearGradient id="fl4" x1="0" y1="43" x2="0" y2="51"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#EA580C"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+      Gợi ý món
+    </div>
+    <div class="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg>
+      Món đã lưu
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

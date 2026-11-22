@@ -24,7 +24,17 @@ table below and use it everywhere.
 
 | Engine concept | This project's user word |
 |---|---|
-| _(e.g. async agent run)_ | _(e.g. "đang phân loại…")_ |
+| gọi AI/API gợi ý | "Gợi ý món ăn" |
+| đang xử lý (loading) | "Đang nghĩ món ngon cho bạn…" |
+| recipes (kết quả trả về) | "Món nấu được ngay" |
+| missing (gia vị chưa kể) | "Bếp cần sẵn: dầu ăn, nước mắm…" |
+| bookmark / đã lưu | "Lưu món" / "Món đã lưu" |
+| steps (các bước nấu) | "Cách nấu — từng bước một" |
+| time_minutes | "Khoảng 15 phút" |
+| difficulty | "Dễ / Vừa sức" |
+| lỗi API/timeout (502) | "Chậm quá mất rồi — thử lại nhé" |
+| vượt giới hạn (429) | "Nhiều người đang nấu quá — chờ vài phút rồi thử lại" |
+| không có kết quả (recipes: []) | "Không nghĩ ra món nào với nguyên liệu này — thử thêm vài nguyên liệu nhé" |
 
 ## Five rules that override everything
 
@@ -68,42 +78,69 @@ Every object-detail page:
 - **Modal-first sub-actions** — small focused modals, one CTA. No multi-screen flows.
 - **The overview shows less, not more.** Heavy lifting goes to specialized tabs.
 
-## Editorial Minimal tokens (locked)
+## Warm Kitchen tokens (locked — sửa toàn bộ ngày 2026-11-22)
+
+> **Sửa đổi ngày 2026-11-22 (C-004, operator directive):** Bộ token "Editorial Minimal" ban đầu
+> bị operator từ chối khi duyệt mock v1; yêu cầu mới: giao diện kiểu Cookpad, đồ họa web đẩy
+> mức tối đa. Đổi token MỘT lần duy nhất tại đây theo đúng luật "tokens are taste".
+> Luật cấu trúc (object-first, affordance ladder, never-do) KHÔNG đổi.
 
 | Token | Value | Use |
 |---|---|---|
-| `--bg-base` | `#FFFFFF` | page bg, cards |
-| `--bg-subtle` | `#FAFAFA` | sidebar, savebar, secondary surfaces |
-| `--bg-muted` | `#F4F4F5` | hover, muted chips |
-| `--fg-base` | `#09090B` | primary text, primary buttons |
-| `--fg-muted` | `#52525B` | body, descriptions |
-| `--fg-subtle` | `#71717A` | helper text, timestamps |
-| `--border` | `#E4E4E7` | all 1px borders |
-| `--accent` | `#4F46E5` | focus rings, accent links, validate-ok |
+| `--bg-base` | `#FFFDFA` | page bg (trắng ấm) |
+| `--bg-subtle` | `#FFF7ED` | dải hero, nền phụ |
+| `--bg-muted` | `#FDF0E0` | hover, muted chips |
+| `--fg-base` | `#2D1B0E` | primary text (nâu đậm ấm) |
+| `--fg-muted` | `#6B5544` | body, descriptions |
+| `--fg-subtle` | `#96826F` | helper text |
+| `--border` | `#F3E3CF` | 1px borders (kem) |
+| `--brand` | `#F97316` | brand orange — CTA, link, active |
+| `--brand-deep` | `#EA580C` | hover CTA, badge nền cam |
+| `--accent` | `#F97316` | focus rings, validate-ok (đồng bộ brand) |
 
-**Typography**: `Inter` body/labels/buttons · `Fraunces` h1, card titles, prominent stat
-values ONLY · `JetBrains Mono` identifiers, dates, counts, machine-shaped content ONLY.
-Don't sprinkle serif on body text or mono on prose.
+**Typography**: giữ nguyên — `Fraunces` h1/card titles ONLY · `Inter` body ·
+`JetBrains Mono` con số/thời gian ONLY.
 
-**Borders**: 1px `var(--border)`. No drop shadows except focus rings, active sidebar item,
-and hero-card hover lift. One purposeful elevation, never shadow noise.
+**Borders & shadows**: 1px `var(--border)` cho input/divider; card 16–24px radius kèm
+**layered soft shadow** (2 lớp, tông cam mờ: `0 2px 8px rgba(249,115,22,.08)` +
+`0 12px 32px rgba(45,27,14,.10)`) — đặc trưng Cookpad-style "thẻ nổi ấm". Shadow chỉ trên
+card/badge — không stack quá 2 lớp.
 
-## Soft gradients (highlight, not decorate)
+**Màu nguyên liệu (color-coding chips)**: trứng `#FCD34D` · cà chua `#F87171` ·
+hành tây `#C4B5FD` · thịt heo `#F9A8D4` · rau `#86EFAC` · tỏi `#D6D3D1` — nền nhạt của
+mỗi màu, chữ `--fg-base`.
 
-Hero surfaces ONLY (hero action cards, gallery/list covers, pulse backdrop). NEVER on
-tables, form inputs, sidebars, page backgrounds, or body rows.
+## Soft gradients (highlight, not decorate — giữ luật phạm vi)
+
+Hero surfaces + card cover ONLY; không bao giờ trên input, nền trang, row:
 
 ```css
---grad-peach:    linear-gradient(135deg, #FFF4EC 0%, #FEE7D6 100%);  /* action / first in a series */
---grad-mint:     linear-gradient(135deg, #ECFDF3 0%, #D1F4DD 100%);  /* money / success / all-green */
---grad-sky:      linear-gradient(135deg, #EEF4FF 0%, #DCE7FF 100%);  /* info / context banners */
---grad-lavender: linear-gradient(135deg, #F3EEFF 0%, #E2D6FB 100%);  /* primary surface / pulse */
---grad-rose:     linear-gradient(135deg, #FFF1F4 0%, #FDDDE3 100%);  /* social / sharing / accent */
---grad-pulse:    linear-gradient(90deg, #FAFAFA 0%, #F3EEFF 50%, #FAFAFA 100%); /* subtle strips */
+--grad-sunrise:  linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 55%, #FED7AA 100%);  /* hero đầu trang / cover món chính */
+--grad-ember:    linear-gradient(135deg, #FDBA74 0%, #F97316 100%);              /* CTA chính, badge nổi bật */
+--grad-mint:     linear-gradient(135deg, #ECFDF3 0%, #D1F4DD 100%);              /* lưu món / success */
+--grad-rose:     linear-gradient(135deg, #FFF1F4 0%, #FDDDE3 100%);              /* chia sẻ / social */
+--grad-pulse:    linear-gradient(90deg, #FFFDFA 0%, #FFF1E4 50%, #FFFDFA 100%);  /* strip metric */
 ```
 
-Hover on gradient cards: lift `translateY(-1px)` + `box-shadow: 0 8px 24px rgba(9,9,11,.06)`;
-no hard accent border.
+Hover gradient card: lift `translateY(-1px)` + shadow đậm hơn một nấc; không viền accent cứng.
+
+## Food art (thay ảnh stock trong v1)
+
+Card cover dùng **SVG vẽ tay món ăn** (trứng chiên, cà chua, hành tây…) đặt trên nền
+gradient `--grad-sunrise` — controlled, tự nhiên, không cần ảnh ngoài. Khi có ảnh thật
+ở v2, SVG thay bằng `<img>` cùng khung.
+
+**Step art (thêm 2026-11-22 theo operator review v2):** mỗi bước nấu có thumbnail SVG
+56px kèm cảnh riêng (thớt sơ chế, chảo phi hành tây, chảo xào cà chua, tráng trứng) —
+bước nào nhìn là biết phải làm gì, không cần đọc hết câu chữ.
+
+**Premium rule (operator review v3 — 2026-11-22):** flat vector đơn tầng bị chê "kiểu
+bao bì mì tôm". Mọi art phải layered: radial-gradient nhiều stop cho vật thể, bokeh
+nền, specular highlight, ground shadow mềm — chiều sâu trước, chi tiết sau.
+
+**Bottom tab bar (operator yêu cầu 2026-11-22):** thanh tab cuối màn hình, 2 tab đúng
+scope v1 — "Gợi ý món" (active) · "Món đã lưu". KHÔNG phát minh tab ngoài scope
+(khám phá/hồ sơ) — đó là scope creep trong thiết kế.
 
 ## Forms
 
