@@ -59,7 +59,7 @@ Người mới tập nấu tại Việt Nam có nguyên liệu trong tủ lạnh
 - Thời gian phản hồi gợi ý: p95 ≤ 10 giây từ lúc nhấn "Gợi ý món ăn" đến khi danh sách hiển thị (trên kết nối 4G trung bình).
 - Tải trang: LCP ≤ 2.5 giây trên trang chủ (deploy Vercel edge).
 - Không cần đăng nhập; không lưu dữ liệu người dùng trên server — mọi dữ liệu người dùng (bookmark, lịch sử) chỉ nằm trong LocalStorage của trình duyệt.
-- Chi phí vận hành: 0đ — Vercel free tier + Gemini API free tier (giới hạn 15 request/phút); quá giới hạn hiển thị fail-state của FR1.
+- Chi phí vận hành: 0đ — Vercel free tier + Gemini API free tier (rate limit RPM/RPD do Google điều chỉnh theo đợt — sửa 2026-11-22, trước ghi "15 request/phút"); quá giới hạn hiển thị fail-state của FR1.
 - Ngôn ngữ giao diện: tiếng Việt duy nhất trong v1.
 - Ngữ cảnh sử dụng: vừa nấu vừa xem — mọi màn hình thao tác được bằng 1 tay trên mobile.
 
@@ -67,7 +67,7 @@ Người mới tập nấu tại Việt Nam có nguyên liệu trong tủ lạnh
 
 - **Frontend**: Next.js 16 (App Router) + React 19 (sửa từ "Next.js 15" ngày 2026-11-22 theo ADR decision 5 — create-next-app chính thức cài bản 16.4.6), styling bằng Tailwind CSS v4.
 - **Backend**: Next.js API Routes (route handlers) — không có server riêng.
-- **AI**: Google Gemini API (model `gemini-2.0-flash` trên free tier), gọi từ API route server-side, API key nằm trong biến môi trường Vercel.
+- **AI**: Google Gemini API (model `gemini-2.5-flash` trên free tier — sửa từ `gemini-2.0-flash` ngày 2026-11-22 sau khi list-models bằng key thật cho thấy họ 2.0 đã retired), gọi từ API route server-side, API key nằm trong biến môi trường Vercel.
 - **Lưu trữ**: LocalStorage (bookmark, lịch sử tra cứu) — không database trong v1.
 - **Deploy**: Vercel (free tier), domain dạng `*.vercel.app`.
 - **Ngôn ngữ nội dung**: tiếng Việt; prompt AI được viết để chỉ trả về món ăn gia đình Việt Nam phổ thông.
@@ -87,4 +87,4 @@ Không còn quyết định mở nào — AI provider (Gemini), ngôn ngữ (ti�
 - Người vận hành tự đăng ký Google AI Studio để lấy Gemini API key và đặt vào biến môi trường `GEMINI_API_KEY` trên Vercel (không tính phí trong free tier).
 - Trình duyệt mục tiêu: Chrome/Safari mobile ≥ 2023 (hỗ trợ Clipboard API, Web Share API, LocalStorage).
 - Người dùng chấp nhận gợi ý chỉ giới hạn trong ẩm thực gia đình Việt Nam phổ thông (đã chốt ở stage 02 scope).
-- Gemini free tier giới hạn 15 request/phút là đủ cho volume 150 lượt tra cứu/2 tuần.
+- Gemini free tier đủ cho volume 150 lượt tra cứu/2 tuần (~11 lượt/ngày) dưới mọi ngưỡng RPD/RPM mà tài liệu Google và bên thứ ba ghi nhận trong 2026 (sửa từ "15 req/phút" ngày 2026-11-22 theo ADR decision 4).

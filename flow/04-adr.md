@@ -15,7 +15,7 @@ Short. The most valuable section is what you are NOT doing and why.
 | 1 | **Data storage**: LocalStorage trên trình duyệt, không database server | v1 chỉ cần lưu bookmark + lịch sử tra cứu trên 1 thiết bị; người dùng không cần đăng nhập nên không có dữ liệu cần sync | Postgres/Firebase + API riêng — thêm chi phí vận hành và surface lỗi cho MVP 20 giờ |
 | 2 | **Auth approach**: không có đăng nhập, web công khai ẩn danh | rào cản đăng ký giết tỷ lệ thử nghiệm của 10 người dùng đầu tiên đến từ group Facebook | NextAuth/magic-link — tăng thời gian build ít nhất gấp đôi, không pain nào trong PRD đòi hỏi nó |
 | 3 | **Deploy target**: Vercel free tier, domain `*.vercel.app` | build Next.js native, deploy bằng 1 git push, 0đ chi phí hosting, đủ cho 50 người dùng | VPS tự quản — tốn công set up CI/CD và SSL cho một MVP |
-| 4 | **AI integration**: gọi Gemini API (`gemini-2.0-flash`) từ Next.js API route server-side, API key trong biến môi trường | free tier 15 req/phút đủ 150 lượt/2 tuần; gọi server-side giấu API key khỏi client | Gọi API trực tiếp từ client — lộ API key trong bundle; hoặc dùng OpenAI — tính phí theo token |
+| 4 | **AI integration**: gọi Gemini API (`gemini-2.5-flash`) từ Next.js API route server-side, API key trong biến môi trường | free tier của Gemini Flash đủ dư cho 150 lượt/2 tuần (~11 lượt/ngày, dưới mọi ngưỡng RPD mà tài liệu/bên thứ ba ghi nhận); gọi server-side giấu API key khỏi client | Gọi API trực tiếp từ client — lộ API key trong bundle; hoặc dùng OpenAI — tính phí theo token |
 | 5 | **Kiến trúc**: Next.js 16 fullstack (App Router, frontend + API routes trong 1 repo) | 1 codebase duy nhất, deploy 1 lần, không cần backend riêng | Tách frontend/backend 2 repo (VD Next.js + FastAPI) — gấp đôi khối lượng vận hành cho MVP |
 | 6 | **Nội dung AI**: prompt cấu trúc hóa JSON, giới hạn 100% món ăn gia đình Việt Nam phổ thông | pain P3 (nguyên liệu lạ kiểu Tây) là điều người dùng phàn nàn trực tiếp về SuperCook | Để AI tự do gợi ý mọi ẩm thực — gợi ý lệch khỏi khẩu vị mục tiêu VN |
 
@@ -24,6 +24,14 @@ Short. The most valuable section is what you are NOT doing and why.
 > Chấp nhận nâng version cùng hướng với quyết định gốc (App Router fullstack 1 repo,
 > Vercel) — không đổi bản chất kiến trúc, chỉ nâng minor platform theo phương tiện cài
 > chính thức. Người vận hành được thông báo trong phiên build C-001.
+
+> **Sửa đổi ngày 2026-11-22 (chuẩn bị C-002):** Quyết định 4 ghi ban đầu model
+> `gemini-2.0-flash` với "15 req/phút". Kiểm tra trực tiếp bằng API key thật
+> (list-models ngày 2026-11-22): họ model 2.0 **không còn** trong danh sách tài khoản,
+> thay bằng **`gemini-2.5-flash`**. Ngưỡng free tier RPM/RPD Google điều chỉnh nhiều đợt
+> (nguồn bên ngoài 2026 ghi nhận 5–15 RPM và 20–1500 RPD); volume mục tiêu
+> 150 lượt/2 tuần (~11 lượt/ngày) nằm dưới mọi ngưỡng đã ghi nhận nên giữ phương án
+> free tier. Hình dạng lỗi 429 trong contract giữ nguyên, chỉ bỏ con số ngưỡng cứng.
 
 ## NOT doing in v1 (and why it's safe to skip)
 
